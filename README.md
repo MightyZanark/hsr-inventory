@@ -43,6 +43,7 @@ urlpatterns = [
 Saya mengkonfigurasi agar `main.html` dapat tampil ketika page diakses secara langsung, tanpa harus menuju ke *path* tertentu.
 
 8. Setelah itu, saya mencoba menjalankan dan berhasil terlihat `main.html` dengan context yang saya tambahkan pada `views.py`.
+
 ![Screnshot yang menunjukkan main.html dengan context saat dijalankan di local](/ss_main_html_with_context.png)
 
 9. Selanjutnya, saya mulai membuat model bernama `Item` dalam file [models.py](/main/models.py) yang berada di direktori `main`. Model `Item` tersebut memiliki atribut berupa `name`, `amount`, `description`, dan `category`. `name` berupa sebuah `CharField` dengan panjang maksimal 50 karakter, `amount` berupa sebuah `IntegerField`, `description` berupa sebuah `TextField`, dan `category` berupa sebuah `CharField` yang memiliki 3 opsi pilihan. Selesai membuat model tersebut, saya menjalankan perintah `python manage.py makemigrations && python manage.py migrate` agar database juga ikut terupdate.
