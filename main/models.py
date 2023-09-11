@@ -5,12 +5,12 @@ class Item(models.Model):
     amount = models.IntegerField()
     description = models.TextField()
 
-    CHAREXP = "CHAREXP"
-    LCEXP = "LCEXP"
-    RELEXP = "RELEXP"
+    CHAREXP = "CHAR_EXP"
+    LCEXP = "LC_EXP"
+    RELEXP = "RELIC_EXP"
     CATEGORY_CHOICES = [
         (CHAREXP, "Character EXP Material"),
         (LCEXP, "Light Cone EXP Material"),
         (RELEXP, "Relic Exp Material"),
     ]
-    category = models.CharField(max_length=7, choices=CATEGORY_CHOICES, default=CHAREXP)
+    category = models.CharField(max_length=9, choices=CATEGORY_CHOICES, default=CHAREXP)
