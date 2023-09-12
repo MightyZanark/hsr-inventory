@@ -53,16 +53,16 @@ Saya mengkonfigurasi agar `main.html` dapat tampil ketika page diakses secara la
 
 11. Terakhir, saya melakukan *deployment* ke [Adaptable](https://adaptable.io) mengikuti langkah-langkah yang telah diberikan pada tutorial, dengan konfigurasi versi Python 3.10 dan `Start Command` dengan perintah `python manage.py migrate && gunicorn game_inventory.wsgi`. *Deployment* dapat dilihat di link [berikut](https://zanark-hsr-inventory.adaptable.app/).
 
-<hr>
+---
 > Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara `urls.py`, `views.py`, `models.py`, dan berkas `html`.
 
-<hr>
+---
 > Jelaskan mengapa kita menggunakan ***virtual environment***? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan ***virtual environment***?
 
 Kita menggunakan *virtual environment* agar kita dapat mengisolasi *dependencies* yang dibutuhkan untuk aplikasi Django kita dengan *dependencies* lainnya. Kita mengisolasi *dependencies* tersebut karena ada kemungkinan ketika *dependencies* tersebut memiliki versi terbaru dan kita memperbaharui *dependencies* tersebut ke versi terbarunya, akan terjadi konflik atau ada fitur-fitur yang tidak berfungsi seperti yang kita harapkan.
 Kita bisa saja membuat aplikasi web berbasis Django tanpa menggunakan *virtual environment* karena pada dasarnya *dependencies* yang dibutuhkan bisa saja kita install secara global di laptop/komputer kita. Namun, akan lebih baik jika kita menggunakan *virtual environment* agar tidak mengganggu *environment* lain yang mungkin kita miliki.
 
-<hr>
+---
 > Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
 
 - `MVC` merupakan singkatan dari `Model-View-Controller`. 
