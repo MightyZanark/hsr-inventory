@@ -1,4 +1,5 @@
 # HSR Game Inventory
+### *Deployment* bisa dilihat di [sini](https://zanark-hsr-inventory.adaptable.app/).
 
 > Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
@@ -18,9 +19,9 @@ urllib3
 
 4. Kemudian, saya membuat app baru bernama `main` melalui perintah `python manage.py startapp main` dan menambahkan aplikasi tersebut ke `settings.py` yang terdapat dalam direktori `game_inventory`, dalam variable yang bernama `INSTALLED_APPS`.
 
-5. Setelah itu, saya membuat direktori `template` dalam direktori app `main` tersebut dan menambahkan file bernama [main.html](/main/templates/main.html) yang nantinya berguna untuk menunjukkan nama aplikasi, nama saya, kelas saya, dan juga barang-barang yang sedang ada di inventori saya.
+5. Setelah itu, saya membuat direktori `template` dalam direktori app `main` tersebut dan menambahkan file bernama [`main.html`](/main/templates/main.html) yang nantinya berguna untuk menunjukkan nama aplikasi, nama saya, kelas saya, dan juga barang-barang yang sedang ada di inventori saya.
 
-6. Setelah selesai mengkonfigurasi `main.html`, saya membuat function `show_main` di dalam file [views.py](/main/views.py) yang terdapat di direktori `main` guna menampilkan file `main.html` dengan context yang diperlukannya. 
+6. Setelah selesai mengkonfigurasi `main.html`, saya membuat function `show_main` di dalam file [`views.py`](/main/views.py) yang terdapat di direktori `main` guna menampilkan file `main.html` dengan context yang diperlukannya. 
 
 7. Agar `main.html` benar tampil saat saya mengakses halaman webnya, saya membuat file `urls.py` di direktori main dan menambahkan potongan *code* berikut.
 ```python
@@ -46,6 +47,38 @@ Saya mengkonfigurasi agar `main.html` dapat tampil ketika page diakses secara la
 
 ![Screnshot yang menunjukkan main.html dengan context saat dijalankan di local](/ss_main_html_with_context.png)
 
-9. Selanjutnya, saya mulai membuat model bernama `Item` dalam file [models.py](/main/models.py) yang berada di direktori `main`. Model `Item` tersebut memiliki atribut berupa `name`, `amount`, `description`, dan `category`. `name` berupa sebuah `CharField` dengan panjang maksimal 50 karakter, `amount` berupa sebuah `IntegerField`, `description` berupa sebuah `TextField`, dan `category` berupa sebuah `CharField` yang memiliki 3 opsi pilihan. Selesai membuat model tersebut, saya menjalankan perintah `python manage.py makemigrations && python manage.py migrate` agar database juga ikut terupdate.
+9. Selanjutnya, saya mulai membuat model bernama `Item` dalam file [`models.py`](/main/models.py) yang berada di direktori `main`. Model `Item` tersebut memiliki atribut berupa `name`, `amount`, `description`, dan `category`. `name` berupa sebuah `CharField` dengan panjang maksimal 50 karakter, `amount` berupa sebuah `IntegerField`, `description` berupa sebuah `TextField`, dan `category` berupa sebuah `CharField` yang memiliki 3 opsi pilihan. Selesai membuat model tersebut, saya menjalankan perintah `python manage.py makemigrations && python manage.py migrate` agar database juga ikut terupdate.
 
-10. 
+10. Setelah selesai membuat model, saya lanjutkan dengan membuat unit testing dalam file [`tests.py`](/main/tests.py) yang mengetes apakah model yang saya telah buat tersebut sudah sesuai yang saya inginkan atau belum. Test pertama, `test_item_have_all_attribute` mengecek apakah atribut yang saya deklarasikan dalam model benar-benar ada dan test ke-2, `test_item_default_category` mengecek apakah jika atribut `category` tidak diberikan saat pembuatan objek, apakah *default value*nya sesuai dengan apa yang telah saya berikan di file `model.py`. Saya juga melakukan `pip install coverage` dan menambahkannya di `requirements.txt`, mengikuti apa yang terdapat dalam ppt agar bisa melihat data hasil melakukan test dengan perintah `python manage.py test`.
+
+11. Terakhir, saya melakukan *deployment* ke [Adaptable](https://adaptable.io) mengikuti langkah-langkah yang telah diberikan pada tutorial, dengan konfigurasi versi Python 3.10 dan `Start Command` dengan perintah `python manage.py migrate && gunicorn game_inventory.wsgi`. *Deployment* dapat dilihat di link [berikut](https://zanark-hsr-inventory.adaptable.app/).
+
+<hr>
+> Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara `urls.py`, `views.py`, `models.py`, dan berkas `html`.
+
+<hr>
+> Jelaskan mengapa kita menggunakan ***virtual environment***? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan ***virtual environment***?
+
+Kita menggunakan *virtual environment* agar kita dapat mengisolasi *dependencies* yang dibutuhkan untuk aplikasi Django kita dengan *dependencies* lainnya. Kita mengisolasi *dependencies* tersebut karena ada kemungkinan ketika *dependencies* tersebut memiliki versi terbaru dan kita memperbaharui *dependencies* tersebut ke versi terbarunya, akan terjadi konflik atau ada fitur-fitur yang tidak berfungsi seperti yang kita harapkan.
+Kita bisa saja membuat aplikasi web berbasis Django tanpa menggunakan *virtual environment* karena pada dasarnya *dependencies* yang dibutuhkan bisa saja kita install secara global di laptop/komputer kita. Namun, akan lebih baik jika kita menggunakan *virtual environment* agar tidak mengganggu *environment* lain yang mungkin kita miliki.
+
+<hr>
+> Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
+
+- `MVC` merupakan singkatan dari `Model-View-Controller`. 
+    * `Model` merupakan bagian yang mengatur data dan berinteraksi dengan *database*. 
+    * `View` merupakan bagian yang mengontrol presentasi dari data tersebut, bagaimana data tersebut akan ditampilkan. 
+    * `Controller` merupakan bagian yang memanipulasi data dengan `Model` dan kemudian meneruskannya ke `View` untuk diproses menjadi tampilan akhir yang akan ditampilkan ke layar pengguna.
+
+- `MVT` merupakan singkatan dari `Model-View-Template`. 
+    * `Model` merupakan bagian yang mengontrol akses data dan memberikan data sesuai yang diminta oleh `View`. 
+    * `View` merupakan bagian yang mengontrol bagaimana data akan ditampilkan ke layar pengguna.
+    * `Template` merupakan bagian yang mengontrol tampilan dasar aplikasi, yang nantinya akan diisi oleh data-data dari `View`.
+
+- `MVVM` merupakan singkatan dari `Model-View-ViewModel`.
+    * `Model` merupakan bagian yang mengatur data dan logika aplikasi.
+    * `View` merupakan bagian yang mengontrol bagaimana tampilan yang akan pengguna lihat di layar, namun tidak mengolah data yang diterimanya, hanya meletakkan data ke tempat yang telah didefinisikan.
+    * `ViewModel` merupakan bagian yang menjembatani `Model` dan `View` dan memberikan data yang akan ditampilkan ke pengguna ke `View`.
+
+- Perbedaan antara `MVC`, `MVT`, dan `MVVM`:
+    1. `View` pada `MVC` mengontrol secara keseluruhan bagaimana data akan dipresentasikan kepada pengguna, sedangkan pada `MVT`, `Template` merupakan bagian yang bertanggung jawab melakukan tugas tersebut, dan pada `MVVM`, `View` hanya meletakkan data yang diterimanya ke tempat-tempat yang telah dibuatnya, tidak terjadi proses pengolahan data..
