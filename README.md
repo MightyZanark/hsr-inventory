@@ -91,3 +91,13 @@ Kita bisa saja membuat aplikasi web berbasis Django tanpa menggunakan *virtual e
     1. `View` pada `MVC` mengontrol secara keseluruhan bagaimana data akan dipresentasikan kepada pengguna, sedangkan pada `MVT`, `Template` merupakan bagian yang bertanggung jawab melakukan tugas tersebut, dan pada `MVVM`, `View` hanya meletakkan data yang diterimanya ke tempat-tempat yang telah dibuatnya, tidak terjadi proses pengolahan data.
 
     2. `Controller` pada `MVC` mengontrol semua proses manipulasi data dengan `Model` dan meneruskannya ke `View`, sedangkan pada `MVT`, `View` merupakan bagian yang memiliki tugas paling mirip dengan `Controller` namun `View` memproses *HTTP Request* dan mengembalikan *HTTP Response*, dan pada `MVVM`, bagian `ViewModel` merupakan bagian yang mirip dengan `Controller`, hanya saja `ViewModel` lebih berperan sebagai jembatan antara `View` dan `Model` di `MVVM`, tidak mengontrol proses-proses.
+
+---
+Ref:
+- [Django Project MVT Structure](https://www.geeksforgeeks.org/django-project-mvt-structure/) from `GeeksForGeeks`
+- [MVC Framework Introduction](https://www.geeksforgeeks.org/mvc-framework-introduction/) from `GeeksForGeeks`
+- [Model-View-ViewModel (MVVM)](https://learn.microsoft.com/en-us/dotnet/architecture/maui/mvvm) from `Miscrosoft`
+- [What Is MVVM Architecture?](https://builtin.com/software-engineering-perspectives/mvvm-architecture) from `builtin`
+- [MVVM (Model View ViewModel) Architecture Pattern in Android](https://www.geeksforgeeks.org/mvvm-model-view-viewmodel-architecture-pattern-in-android/) from `GeeksForGeeks`
+- [Difference between MVC and MVT design patterns](https://www.geeksforgeeks.org/difference-between-mvc-and-mvt-design-patterns/) from `GeeksForGeeks`
+- [Model-view-viewmodel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) by `Wikipedia`
