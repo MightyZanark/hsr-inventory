@@ -60,6 +60,7 @@ Saya mengkonfigurasi agar `main.html` dapat tampil ketika page diakses secara la
 > Jelaskan mengapa kita menggunakan ***virtual environment***? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan ***virtual environment***?
 
 Kita menggunakan *virtual environment* agar kita dapat mengisolasi *dependencies* yang dibutuhkan untuk aplikasi Django kita dengan *dependencies* lainnya. Kita mengisolasi *dependencies* tersebut karena ada kemungkinan ketika *dependencies* tersebut memiliki versi terbaru dan kita memperbaharui *dependencies* tersebut ke versi terbarunya, akan terjadi konflik atau ada fitur-fitur yang tidak berfungsi seperti yang kita harapkan.
+
 Kita bisa saja membuat aplikasi web berbasis Django tanpa menggunakan *virtual environment* karena pada dasarnya *dependencies* yang dibutuhkan bisa saja kita install secara global di laptop/komputer kita. Namun, akan lebih baik jika kita menggunakan *virtual environment* agar tidak mengganggu *environment* lain yang mungkin kita miliki.
 
 ---
@@ -67,18 +68,26 @@ Kita bisa saja membuat aplikasi web berbasis Django tanpa menggunakan *virtual e
 
 - `MVC` merupakan singkatan dari `Model-View-Controller`. 
     * `Model` merupakan bagian yang mengatur data dan berinteraksi dengan *database*. 
+    
     * `View` merupakan bagian yang mengontrol presentasi dari data tersebut, bagaimana data tersebut akan ditampilkan. 
+    
     * `Controller` merupakan bagian yang memanipulasi data dengan `Model` dan kemudian meneruskannya ke `View` untuk diproses menjadi tampilan akhir yang akan ditampilkan ke layar pengguna.
 
 - `MVT` merupakan singkatan dari `Model-View-Template`. 
     * `Model` merupakan bagian yang mengontrol akses data dan memberikan data sesuai yang diminta oleh `View`. 
+    
     * `View` merupakan bagian yang mengontrol bagaimana data akan ditampilkan ke layar pengguna.
+    
     * `Template` merupakan bagian yang mengontrol tampilan dasar aplikasi, yang nantinya akan diisi oleh data-data dari `View`.
 
 - `MVVM` merupakan singkatan dari `Model-View-ViewModel`.
     * `Model` merupakan bagian yang mengatur data dan logika aplikasi.
+    
     * `View` merupakan bagian yang mengontrol bagaimana tampilan yang akan pengguna lihat di layar, namun tidak mengolah data yang diterimanya, hanya meletakkan data ke tempat yang telah didefinisikan.
+    
     * `ViewModel` merupakan bagian yang menjembatani `Model` dan `View` dan memberikan data yang akan ditampilkan ke pengguna ke `View`.
 
 - Perbedaan antara `MVC`, `MVT`, dan `MVVM`:
-    1. `View` pada `MVC` mengontrol secara keseluruhan bagaimana data akan dipresentasikan kepada pengguna, sedangkan pada `MVT`, `Template` merupakan bagian yang bertanggung jawab melakukan tugas tersebut, dan pada `MVVM`, `View` hanya meletakkan data yang diterimanya ke tempat-tempat yang telah dibuatnya, tidak terjadi proses pengolahan data..
+    1. `View` pada `MVC` mengontrol secara keseluruhan bagaimana data akan dipresentasikan kepada pengguna, sedangkan pada `MVT`, `Template` merupakan bagian yang bertanggung jawab melakukan tugas tersebut, dan pada `MVVM`, `View` hanya meletakkan data yang diterimanya ke tempat-tempat yang telah dibuatnya, tidak terjadi proses pengolahan data.
+
+    2. `Controller` pada `MVC` mengontrol semua proses manipulasi data dengan `Model` dan meneruskannya ke `View`, sedangkan pada `MVT`, `View` merupakan bagian yang memiliki tugas paling mirip dengan `Controller` namun `View` memproses *HTTP Request* dan mengembalikan *HTTP Response*, dan pada `MVVM`, bagian `ViewModel` merupakan bagian yang mirip dengan `Controller`, hanya saja `ViewModel` lebih berperan sebagai jembatan antara `View` dan `Model` di `MVVM`, tidak mengontrol proses-proses.
