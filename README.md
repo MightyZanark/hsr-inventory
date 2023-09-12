@@ -56,6 +56,11 @@ Saya mengkonfigurasi agar `main.html` dapat tampil ketika page diakses secara la
 ---
 > Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara `urls.py`, `views.py`, `models.py`, dan berkas `html`.
 
+![Gambar bagan basic HTTP Request hingga HTTP Response](/basic-django.png)
+(Gambar diambil dari [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Home_page))
+
+Pada bagan di atas, dapat dilihat bahwa *HTTP Request* yang berasal dari *client* akan pertama dikirim ke file `urls.py` untuk melihat *request* tersebut ingin meminta hal apa. Misalnya jika *HTTP Request* dari *client* ingin pergi ke lokasi `/` atau *root*, file `urls.py` akan melihat *function* apa yang akan dipanggil untuk menerima *request* tersebut sehingga diproses dan mengembalikan *response*. Dalam kasus aplikasi saya, ketika terdapat sebuah *request* ke `/`, maka *function* yang akan dipanggil adalah `show_main`. *Function* yang akan memproses *request* berada di dalam file `views.py`. Dalam *function* tersebut, bisa saja memerlukan data dari `models.py` atau data di *request* ingin kita simpan ke *database* melalui `models.py`. *HTTP Response* yang akan dihasilkan dari *function* yang dipanggil tersebut secara umum akan menggunakan suatu *template* HTML, yang terdapat dalam direktori `templates`. *Template* HTML tersebut pada dasarnya merupakan file HTML biasa, namun melalui Django, kita bisa menggunakan sintaks spesial untuk memasukkan data ke HTML secara dinamis. Contoh penggunaannya dapat dilihat pada file [`main.html`](/main/templates/main.html). Proses pemasukan data ke file HTML dilakukan pada *function* yang dipanggil di `views.py` dan setelah melalui proses tersebut, file HTML tersebut akan dikirimkan kembali kepada *client* yang di awal me*request* halaman tersebut.
+
 ---
 > Jelaskan mengapa kita menggunakan ***virtual environment***? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan ***virtual environment***?
 
@@ -100,4 +105,4 @@ Ref:
 - [What Is MVVM Architecture?](https://builtin.com/software-engineering-perspectives/mvvm-architecture) from `builtin`
 - [MVVM (Model View ViewModel) Architecture Pattern in Android](https://www.geeksforgeeks.org/mvvm-model-view-viewmodel-architecture-pattern-in-android/) from `GeeksForGeeks`
 - [Difference between MVC and MVT design patterns](https://www.geeksforgeeks.org/difference-between-mvc-and-mvt-design-patterns/) from `GeeksForGeeks`
-- [Model-view-viewmodel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) by `Wikipedia`
+- [Model-view-viewmodel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) from `Wikipedia`
