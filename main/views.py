@@ -6,6 +6,7 @@ from django.shortcuts import render
 from main.forms import ItemForm
 from main.models import Item
 
+
 def show_main(request: HttpRequest) -> HttpResponse:
     items = Item.objects.all()
     
@@ -17,6 +18,7 @@ def show_main(request: HttpRequest) -> HttpResponse:
 
     return render(request, "main.html", context)
 
+
 def add_item(request: HttpRequest) -> HttpResponseRedirect | HttpResponse:
     form = ItemForm(request.POST or None)
 
@@ -26,3 +28,23 @@ def add_item(request: HttpRequest) -> HttpResponseRedirect | HttpResponse:
 
     context = {'form': form}
     return render(request, "add_item.html", context)
+
+
+def show_xml(request: HttpRequest) -> HttpResponse:
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+
+def show_xml_by_id(request: HttpRequest, id: int) -> HttpResponse:
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+
+def show_json(request: HttpRequest) -> HttpResponse:
+    data = Item.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+
+def show_json_by_id(request: HttpRequest, id: int) -> HttpResponse:
+    data = Item.objects.filter(pk=id)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")

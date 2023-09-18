@@ -1,5 +1,9 @@
 # HSR Game Inventory
-### *Deployment* bisa dilihat di [sini](https://zanark-hsr-inventory.adaptable.app/).
+- [Tugas 2](#tugas-2)
+- [Tugas 3](#tugas-3)
+
+
+## Tugas 2
 
 > Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
@@ -107,3 +111,20 @@ Ref:
 - [MVVM (Model View ViewModel) Architecture Pattern in Android](https://www.geeksforgeeks.org/mvvm-model-view-viewmodel-architecture-pattern-in-android/) from `GeeksForGeeks`
 - [Difference between MVC and MVT design patterns](https://www.geeksforgeeks.org/difference-between-mvc-and-mvt-design-patterns/) from `GeeksForGeeks`
 - [Model-view-viewmodel](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel) from `Wikipedia`
+---
+
+## Tugas 3
+
+> Apa perbedaan antara form `POST` dan form `GET` dalam Django?
+
+---
+> Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+
+---
+> Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+
+---
+> Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+---
+> Hasil akses kelima URL di poin 2 menggunakan Postman
