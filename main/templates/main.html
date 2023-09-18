@@ -1,19 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Game Inventory App</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <h1>HSR Game Inventory</h1>
-        <p>Name: {{ name }}</p>
-        <p>Class: PBP {{ class }}</p>
-        <hr>
-        <h2>Current Inventory</h2>
-        <ul>
-            {% for item in inventory %}
-            <li>{{ item.name }}: {{ item.amount }}</li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% block meta %}
+<title>Game Inventory App</title>
+{% endblock meta %}
+
+{% block content %}
+<h1>HSR Game Inventory</h1>
+<p>Name: {{ name }}</p>
+<p>Class: PBP {{ class }}</p>
+<hr>
+<h2>Current Inventory</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Description</th>
+        <th>Category</th>
+    </tr>
+
+    {% for item in inventory %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.amount }}</td>
+            <td>{{ item.description }}</td>
+            <td>{{ item.category }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<br>
+
+<a href="{% url 'main:add_item' %}">
+    <button>
+        Add New Item
+    </button>
+</a>
+{% endblock content %}
