@@ -8,12 +8,17 @@ from main.models import Item
 
 
 def show_main(request: HttpRequest) -> HttpResponse:
-    items = Item.objects.all()
-    
+    items = Item.objects.order_by("-amount").all()
+    total_amt = 0
+    for item in items:
+        total_amt += item.amount
+
     context = {
         'name': 'Juan Maxwell Tanaya',
         'class': 'C',
         'inventory': items,
+        'item_amt': len(items),
+        'total_amt': total_amt
     }
 
     return render(request, "main.html", context)

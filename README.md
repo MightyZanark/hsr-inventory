@@ -117,14 +117,22 @@ Ref:
 
 > Apa perbedaan antara form `POST` dan form `GET` dalam Django?
 
+Perbedaannya adalah `POST` menggabungkan data dari form dan meng*encode* data tersebut lalu dikirimkan ke server, sedangkan `GET` menggabungkan data dari form menjadi sebuah string dan menggunakannya di dalam URL. `POST` biasanya digunakan untuk *request* yang mengandung data sensitif seperti untuk *login*, atau untuk *request* yang mengubah data di *database*. Di lain sisi, `GET` biasa digunakan untuk *request* seperti pencarian sesuatu di *database*.
+
 ---
 > Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+
+Perbedaan utamanya adalah pada XML, data akan dikirim dalam bentuk yang kompleks karena menggunakan struktur *tag* untuk setiap elemen data, sehingga cukup sulit untuk dibentuk dan dikirim. Pada JSON, data yang dikirim berupa sebuah objek JavaScript yang memiliki struktur `key`: `value`, dengan `key` berupa string dan `value` dapat berupa string, array, atau objek lain, sehingga lebih mudah untuk dibentuk dan dikirim. Pada HTML, data yang dikirim bentuknya mirip seperti XML, namun *tag* nya tidak bisa sembarangan dan harus mengikuti ketentuan yang telah ada karena setiap *tag* di HTML memiliki arti semantiknya sendiri, namun karena ketentuan tersebut, pembentukan dan pengiriman data di HTML lebih mudah dibanding XML.
 
 ---
 > Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
 
+JSON sering digunakan karena struktur JSON jauh lebih simpel dan efisien dibandingkan dengan struktur lain seperti XML. Karena web modern sangat mementingkan efisiensi dan kecepatan respon, tentu saja jika ada cara pertukaran data yang dapat dijalankan dengan cepat dan efisien seperti JSOn, pasti banyak yang ingin menggunakannya. Besarnya data yang mungkin di tukar dalam era web modern ini juga menjadi alasan mengapa JSON sangat sering digunakan, karena JSON tidak memakan terlalu banyak memori jika dibandingkan dengan struktur XML. 
+
 ---
 > Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Pertama, saya membuat direktori baru di *root* direktori saya yang bernama `templates`. Di dalam direktori tersebut, saya membuat *file* bernama `base.html`
 
 ---
 > Hasil akses kelima URL di poin 2 menggunakan Postman
