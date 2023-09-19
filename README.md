@@ -132,7 +132,34 @@ JSON sering digunakan karena struktur JSON jauh lebih simpel dan efisien dibandi
 ---
 > Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
 
-1. Pertama, saya membuat direktori baru di *root* direktori saya yang bernama `templates`. Di dalam direktori tersebut, saya membuat *file* bernama `base.html`
+1. Pertama, saya membuat direktori baru di *root* direktori saya yang bernama `templates`. Di dalam direktori tersebut, saya membuat *file* bernama [`base.html`](/templates/base.html) guna sebagai *template* dasar untuk *file* html lainnya.
+
+2. Setelah itu, saya membuat *file* [`forms.py`](/main/forms.py) sebagai bentuk form dasar untuk model `Item` yang telah saya buat sebelumnya. Isi dari *file* tersebut kurang lebih mirip dengan yang ada di tutorial, hanya berbeda pada atribut `amount` dan atribut tambahan `category`.
+
+3. Selanjutnya saya membuat *template* [`add_item.html`](/main/templates/add_item.html) yang akan digunakan untuk tempat pengisian data `Item` dan merupakan *template* dari *function* `add_item` yang saya tambahkan di `views.py`. *Function* tersebut sama dengan yang ditunjukkan pada tutorial.
+
+4. Selagi saya membuat *function* `add_item` di `views.py`, saya juga mengedit *function* `show_main` agar dapat menampilkan data `Item` yang nantinya dibuat melalui fitur `form` yang telah saya buat sebelumnya. Saya menampilkan `Item` dalam urutan *descending* berdasarkan atribut `amount` dari `Item` tersebut. Saya juga membuat agar terlihat berapa jumlah objek `Item` yang sekarang ada di inventori dan berapa banyak total *slot* inventori yang terpakai.
+
+5. Saya melanjutkan membuat *function* di `views.py` untuk menampilkan data dalam bentuk `XML` dan `JSON`, baik secara menyeluruh maupun secara spesifik berdasarkan `id` yang diminta. Saya kurang lebih hanya mengikuti tutorial untuk bagian ini.
+
+6. Setelah selesai membuat *function-function*, saya lanjutkan dengan melakukan *routing*. Pada bagian ini juga sejujurnya saya hanya mengikuti tutorial dengan perbedaannya hanya terletak pada *route* `add-item`. 
+
+7. Terakhir, saya memodifikasi `main.html` agar dapat menampilkan data-data `Item` dalam bentuk tabel, memberikan info kepada pengguna berapa banyak `Item` yang tersimpan di inventori beserta total *slot* inventori yang terpakai, dan tentunya menambahkan tombol untuk menambahkan data `Item`. Saya juga memodifikasinya agar menggunakan `base.html` yang telah saya buat di awal.
 
 ---
 > Hasil akses kelima URL di poin 2 menggunakan Postman
+
+HTML Biasa
+![Pure HTML](/html.png)
+
+XML
+![XML](/xml.png)
+
+XML by ID 1
+![XML with query id of 1](/xml_id_1.png)
+
+JSON
+![JSON](/json.png)
+
+JSON by ID 2
+![JSON with query id of 2](/json_id_2.png)
