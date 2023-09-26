@@ -170,14 +170,40 @@ JSON by ID 2
 
 > Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
 
+Django `UserCreationForm` adalah semacam *template* form dari Django yang mampu membuat sebuah objek `User` yang memiliki atribut seperti nama depan, nama belakang, password, email, dan username. Kelebihan dari form ini adalah kita tidak perlu susah-susah membuat form untuk pembuatan objek `User` di aplikasi kita, karena `UserCreationForm` sudah menangani semua itu, dari bentuk form, validasi input, hingga keamanan password. Di lain sisi, kekurangan dari `UserCreationForm` adalah keterbatasan atribut yang bisa dimiliki oleh sebuah objek `User` dan juga keterbatasan bentuk form yang akan tampil di halaman web. 
+
 ---
 > Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
 
----
-> Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+Autentikasi dalam Django adalah proses validasi apakah pengguna yang ingin masuk ke aplikasi benar-benar pengguna yang dimaksud atau bukan. Sedangkan, otorisasi di Django adalah proses yang menentukan pengguna yang telah terautentikasi tersebut bisa melakukan apa saja di aplikasi ini. Kedua hal tersebut penting karena di era digital ini, banyak orang yang "menyamar" menjadi orang lain untuk kepentingan yang tidak baik. Dengan adanya proses autentikasi dan otorisasi, jika orang ingin menyamar menjadi orang lain, mereka membutuhkan usaha yang lebih.
 
 ---
-> Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+> Apa itu *cookies* dalam konteks aplikasi web, dan bagaimana Django menggunakan *cookies* untuk mengelola data sesi pengguna?
+
+*Cookies* simpelnya adalah suatu file yang menyimpan data yang dibuat oleh aplikasi web yang kita kunjungi yang kemudian akan disimpan di perangkat yang kita gunakan ketika kita mengunjungi aplikasi web tersebut sehingga jika kita mengunjunginya lagi, kita tidak harus memasukkan data yang sudah kita masukkan sebelumnya. Di Django, *cookies* digunakan untuk mengelola data sesi pengguna dengan cara memberikan pengguna yang telah terautentikasi sebuah cookie yang berisi ID dari sesi pengguna tersebut, yang memiliki waktu aktif tertentu atau selama *browser* terbuka.
+
+---
+> Apakah penggunaan *cookies* aman secara *default* dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+
+Penggunaan *cookies* secara *default* belum tentu aman karena *cookies* sendiri hanyalah sebuah file yang tersimpan di perangkat yang kita miliki, sehingga orang yang memiliki akses ke perangkat kita bisa saja mencari dan melihat file *cookies* kita. Oleh karena itu, implementasi *cookies* pada aplikasi web yang kita buat harus di implementasikan dengan baik. Namun, meskipun implementasi *cookies* kita baik, masih ada beberapa cara lain orang dapat mencuri *cookies* kita, misalnya dengan XSS (*Cross Site Scripting*), MitM (*Man in the Middle*), CSRF (*Cross Site Request Forgery*), dan lainnya.
 
 ---
 > Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+
+1. Pertama, saya membuat *file* [`register.html`](/main/templates/register.html) dan [`login.html`](/main/templates/login.html) untuk keperluan registrasi dan login pengguna.
+
+2. Setelah *template* untuk halaman registrasi dan login selesai dibuat, saya lanjutkan dengan membuat *function* di `views.py` yang berguna untuk menampilkan *form* registrasi dan login bernama `register_user` dan `login_user`. Namun tentunya jika ada opsi login, maka seharusnya ada opsi logout juga, oleh karena itu saya juga buat *function* `logout_user`.
+
+3. Pada *function* `register_user`, saya menggunakan *form* bawaan dari Django yang bernama `UserCreationForm` untuk membuat objek pengguna di aplikasi saya. Awalnya saya ingin memodifikasi `UserCreationForm` dengan menambah atribut `pbp_class`, namun karena keterbatasan waktu dan adanya tugas lain, saya belum bisa mengimplementasikannya di tugas ini.
+
+4. Pada *function* `login_user`, pengguna diautentikasi menurut `username` dan `password` yang sebelumnya sudah dimasukkan ketika registrasi. Jika `username` dan `password` sesuai, maka pengguna akan berhasil diautentikasi dan akan memiliki *cookie* `last_login` dengan data waktu ia login terakhir kali, dan kemudian membawa pengguna ke halaman utama aplikasi.
+
+5. Pada *function* `logout_user`, pengguna akan di logout dengan *function* bawaan dari Django lalu *cookie* `last_login` nya akan dihapus.
+
+6. Sebelum saya mencoba membuat user, saya juga memodifikasi *function* `show_main` sehingga hanya orang yang terautentikasi bisa melihat halaman utama. Hal ini saya lakukan dengan menggunakan *decorator* yang sudah dibuat oleh Django bernama `login_required`. Selanjutnya saya juga memodifikasi `main.html` agar memiliki tombol logout, nama yang ditampilkan bersesuaian dengan nama pengguna yang terautentikasi, dan menampilkan *cookie* `last_login` pengguna.
+
+7. Setelah itu semua selesai, saya menjalankan server lalu membuat akun yang bernama `Maxwell` dan `user2`. Namun karena data dari tugas sebelumnya masih ada dan tidak memiliki *owner*, kedua akun tersebut akan memperlihatkan data yang sama. Oleh karena itu, saya menghubungkan model `Item` dengan `User` sehingga setiap `Item` hanya dimiliki oleh 1 `User`. Saya melakukan hal tersebut dengan menambahkan atribut `user` di `models.py` pada class `Item` yang merupakan sebuah `ForeignKey` ke model `User` yang merupakan bawaan dari Django. Setelah melakukan perubahan ini, saya membuat migrasi dan membuat data yang sudah ada sebelumnya milik `User` dengan id `1`, yaitu `User` yang pertama kali saya buat.
+
+8. Setelah selesai melakukan migrasi, saya langsung mencoba menjalankan server kembali untuk melihat apakah sudah sesuai atau belum. Ketika saya login dengan akun yang memiliki id `1` (akun dengan nama `Maxwell`), saya melihat data yang ditampilkan sesuai. Namun, ketika saya login dengan akun `user2`, saya melihat bahwa data yang seharusnya menjadi milik `Maxwell` sekarang masih ditampilkan. Saya membuang waktu yang relatif banyak disini dengan melakukan `git restore`, menghapus `db.sqlite3`, dan melakukan migrasi ulang dari tugas sebelumnya hingga tugas ini karena saya pikir saya melewati sebuah step. Ternyata, setelah membaca `views.py` lagi, saya lupa untuk mengubah objek `Item` yang diambil menjadi objek `Item` yang dimiliki oleh `user` yang sedang mengakses halamannya. Saya ubah itu, dan setelah dicoba kembali, hasilnya seperti ekspektasi.
+
+---
