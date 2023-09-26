@@ -5,7 +5,7 @@
 
 ## Tugas 2
 
-> Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+> Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
 
 1. Pertama saya membuat sebuah virtual environment dengan `python -m venv env` dan menyalakannya. Kemudian, saya membuat file `requirements.txt` yang isinya *dependencies* sebagai berikut dan menginstallnya dengan perintah `pip install -r requirements.txt`.
 ```
@@ -130,7 +130,7 @@ Perbedaan utamanya adalah pada XML, data akan dikirim dalam bentuk yang kompleks
 JSON sering digunakan karena struktur JSON jauh lebih simpel dan efisien dibandingkan dengan struktur lain seperti XML. Karena web modern sangat mementingkan efisiensi dan kecepatan respon, tentu saja jika ada cara pertukaran data yang dapat dijalankan dengan cepat dan efisien seperti JSOn, pasti banyak yang ingin menggunakannya. Besarnya data yang mungkin di tukar dalam era web modern ini juga menjadi alasan mengapa JSON sangat sering digunakan, karena JSON tidak memakan terlalu banyak memori jika dibandingkan dengan struktur XML. 
 
 ---
-> Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+> Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
 
 1. Pertama, saya membuat direktori baru di *root* direktori saya yang bernama `templates`. Di dalam direktori tersebut, saya membuat *file* bernama [`base.html`](/templates/base.html) guna sebagai *template* dasar untuk *file* html lainnya.
 
@@ -163,3 +163,21 @@ JSON
 
 JSON by ID 2
 ![JSON with query id of 2](/json_id_2.png)
+
+---
+
+## Tugas 4
+
+> Apa itu Django `UserCreationForm`, dan jelaskan apa kelebihan dan kekurangannya?
+
+---
+> Apa perbedaan antara autentikasi dan otorisasi dalam konteks Django, dan mengapa keduanya penting?
+
+---
+> Apa itu cookies dalam konteks aplikasi web, dan bagaimana Django menggunakan cookies untuk mengelola data sesi pengguna?
+
+---
+> Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai?
+
+---
+> Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
