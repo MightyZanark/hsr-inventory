@@ -47,6 +47,23 @@ def add_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     return render(request, "add_item.html", context)
 
 
+def delete_item(request: HttpRequest, id: int) -> HttpResponseRedirect:
+    item = Item.objects.get(pk=id)
+    item.delete()
+    return HttpResponseRedirect(reverse("main:show_main"))
+
+
+def add_subtract_item_by_one(request: HttpRequest, id: int, option: int) -> HttpResponseRedirect:
+    item = Item.objects.get(pk=id)
+    if option == 1:
+        item.amount += 1
+    elif option == 0:
+        if item.amount > 0:
+            item.amount -= 1
+    item.save()
+    return HttpResponseRedirect(reverse("main:show_main"))
+
+
 def show_xml(request: HttpRequest) -> HttpResponse:
     data = Item.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
