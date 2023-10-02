@@ -5,50 +5,72 @@
 {% endblock meta %}
 
 {% block content %}
-<h1>HSR Game Inventory</h1>
-<p>Name: {{ name }}</p>
-<p>Class: PBP {{ class }}</p>
-<hr>
-<h2>Current Inventory</h2>
-<p>You currently have <strong>{{ item_amt }}</strong> items in your inventory, with a total of <strong>{{ total_amt }}</strong> inventory space used</p>
-<table>
-    <tr>
-        <th>Name</th>
-        <th></th>
-        <th>Amount</th>
-        <th></th>
-        <th>Description</th>
-        <th>Category</th>
-        <th></th>
-    </tr>
-
-    {% for item in inventory %}
+<div class="mx-auto p-2">
+    <h1 class="text-center">HSR Game Inventory</h1>
+    <p>Name: {{ name }}</p>
+    <p>Class: PBP {{ class }}</p>
+    <hr>
+</div>
+<div class="mx-auto mb-1 p-2">
+    <h2>Current Inventory</h2>
+    <p>You currently have <strong>{{ item_amt }}</strong> items in your inventory, with a total of <strong>{{ total_amt }}</strong> inventory space used</p>
+</div>
+<table class="table table-striped">
+    <thead>
         <tr>
-            <td>{{ item.name }}</td>
-            <td><a href="{% url 'main:add_subtract_item_by_one' id=item.pk option=1 %}"><button>+</button></a></td>
-            <td>{{ item.amount }}</td>
-            <td><a href="{% url 'main:add_subtract_item_by_one' id=item.pk option=0 %}"><button>-</button></a></td>
-            <td>{{ item.description }}</td>
-            <td>{{ item.category }}</td>
-            <td><a href="{% url 'main:delete_item' id=item.pk %}"><button>Delete</button></a></td>
+            <th class="text-center">Name</th>
+            <th class="text-center" colspan="3">Amount</th>
+            <th class="text-center">Description</th>
+            <th class="text-center">Category</th>
+            <th></th>
         </tr>
-    {% endfor %}
+    </thead>
+
+    <tbody>
+        {% for item in inventory %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>
+                    <a href="{% url 'main:add_subtract_item_by_one' id=item.pk option=1 %}">
+                        <button class="h-25 btn btn-outline-primary">+</button>
+                    </a>
+                </td>
+                <td>{{ item.amount }}</td>
+                <td>
+                    <a href="{% url 'main:add_subtract_item_by_one' id=item.pk option=0 %}">
+                        <button class="btn btn-outline-danger">-</button>
+                    </a>
+                </td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.category }}</td>
+                <td>
+                    <a href="{% url 'main:delete_item' id=item.pk %}">
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 <br>
 
-<a href="{% url 'main:add_item' %}">
-    <button>
-        Add New Item
-    </button>
-</a>
+<div class="mx-auto px-2 pb-3" style="display: inline-block;">
+    <a href="{% url 'main:add_item' %}">
+        <button class="btn btn-outline-primary" style="display: inline-block;">
+            Add New Item
+        </button>
+    </a>
+</div>
 
-<a href="{% url 'main:logout' %}">
-    <button>
-        Logout
-    </button>
-</a>
+<div class="mx-auto pb-3" style="display: inline-block;">
+    <a href="{% url 'main:logout' %}">
+        <button class="btn btn-outline-danger" style="display: inline-block;">
+            Logout
+        </button>
+    </a>
+</div>
 
-<h5>Last login: {{ last_login }}</h5>
+<h5 class="px-2">Last login: {{ last_login }}</h5>
 
 {% endblock content %}
