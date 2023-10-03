@@ -5,18 +5,20 @@
 {% endblock meta %}
 
 {% block content %}
-<h1>Add New Item</h1>
-
-<form method="POST">
-    {% csrf_token %}
-    <table>
-        {{ form.as_table }}
-        <tr>
-            <td></td>
-            <td>
-                <input type="submit" value="Add Item">
-            </td>
-        </tr>
-    </table>
-</form>
+<div class="add-item mx-auto p-4">
+    <h1 class="text-center pb-2">Add New Item</h1>
+    
+    <form method="POST" class="form">
+        {% csrf_token %}
+        <table class="table table-borderless mx-auto my-2">
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Add Item" class="btn btn-outline-primary">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 {% endblock content %}

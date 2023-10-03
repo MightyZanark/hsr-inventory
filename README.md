@@ -247,11 +247,23 @@ Perbedaan antara *margin* dan *padding* adalah *margin* merupakan area kosong da
 > Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
 
 Perbedaan *framework* CSS Tailwind dan Bootstrap:
-- Tailwind memiliki tingkat pembelajaran
+- Tailwind memiliki tingkat pembelajaran yang lebih sulit dibanding Bootstrap karena banyaknya *utility class* yang telah disediakan.
+- Tailwind akan memiliki ukuran *file* CSS yang lebih kecil di akhir dibanding Bootstrap karena Tailwind hanya perlu me*load* *utility class*, sedangkan Bootstrap harus me*load* berbagai macam komponen yang telah didefinisikan juga.
+- Tailwind memberikan kemampuan *customization* yang lebih luas dibanding Bootstrap, sedangkan Bootstrap memberikan *template* yang bisa digunakan langsung.
+
+Menurut saya, kita sebaiknya menggunakan Bootstrap ketika kita tidak terlalu mementingkan *customization* pada aplikasi web kita, dan juga ketika ukuran *file* aplikasi web kita bukan merupakan masalah. Sebaliknya, menurut saya kita menggunakan Tailwind ketika kita ingin melakukan *customization* pada aplikasi web kita secara lebih detil dan sesuai dengan selera kita, bukan hanya sekedar "terlihat bagus", dan juga ketika kita memiliki keterbatasan ukuran *file* untuk aplikasi web kita.
 
 ---
 > Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
 
-1. lorem ipsum
+1. Pertama, saya menambahkan link *CDN* Bootstrap ke `base.html` sehingga semua *file* HTML lain saya langsung dapat menggunakan *class-class* yang disediakan oleh Bootstrap.
+
+2. Setelah itu, saya melakukan *customization* pada halaman `login` terlebih dahulu karena halaman tersebut adalah halaman pertama yang dikunjungi pengguna. Saya membuat judul `Login` berada di tengah halaman melalui *class* `text-center` dan mengikuti tutorial pada dokumentasi Bootstrap untuk membuat input `Username`, `Password`, dan tombol `Submit` terlihat lebih menarik. Saya juga membuat ketika `Username` atau `Password` yang dimasukkan salah, kalimat yang muncul akan berada di dalam kotak berwarna merah. Selain itu, jika pengguna baru saja berhasil melakukan registrasi, kalimat berhasil tersebut akan terletak dalam sebuah kotak berwarna hijau.
+
+3. Selanjutnya, saya memodifikasi halaman `register`. Saya melakukan hal yang sama untuk judul `Register`, yaitu menaruhnya di tengah halaman, lalu membuat tabel input `Username`, `Password`, dan `Password confirmation` lebih rapi. Untuk tombol `Register` saya juga sesuai kan dengan panjang kotak input.
+
+4. Setelah halaman `login` dan `register`, saya melanjutkan ke halaman `inventory`. Disini saya melakukan hal yang sama untuk judul `HSR Game Inventory`, yaitu meletakkannya di tengah halaman web. Setelah itu, saya juga merapikan tabel untuk *item inventory* dengan memberikan *class* `table` dan `table-striped` pada tabel tersebut. Setelah itu saya mengubah semua tombol agar memiliki warna merah/biru sesuai dengan apa yang dilakukan tombol tersebut. Selain itu, saya juga membuat *item* terakhir pada tabel pasti memiliki warna *background* hitam dan tulisan kuning emas.
+
+5. Halaman terkahir yang saya ubah adalah halaman `add-item`. Kurang lebih yang saya lakukan pada halaman tersebut sama seperti yang saya lakukan terhadap halaman `register`, hanya sekedar merapikan tabel input dan menambahkan warna pada tombol `Add Item`.
 
 ---
