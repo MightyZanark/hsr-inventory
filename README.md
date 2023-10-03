@@ -1,6 +1,8 @@
 # HSR Game Inventory
 - [Tugas 2](#tugas-2)
 - [Tugas 3](#tugas-3)
+- [Tugas 4](#tugas-4)
+- [Tugas 5](#tugas-5)
 
 
 ## Tugas 2
@@ -205,5 +207,51 @@ Penggunaan *cookies* secara *default* belum tentu aman karena *cookies* sendiri 
 7. Setelah itu semua selesai, saya menjalankan server lalu membuat akun yang bernama `Maxwell` dan `user2`. Namun karena data dari tugas sebelumnya masih ada dan tidak memiliki *owner*, kedua akun tersebut akan memperlihatkan data yang sama. Oleh karena itu, saya menghubungkan model `Item` dengan `User` sehingga setiap `Item` hanya dimiliki oleh 1 `User`. Saya melakukan hal tersebut dengan menambahkan atribut `user` di `models.py` pada class `Item` yang merupakan sebuah `ForeignKey` ke model `User` yang merupakan bawaan dari Django. Setelah melakukan perubahan ini, saya membuat migrasi dan membuat data yang sudah ada sebelumnya milik `User` dengan id `1`, yaitu `User` yang pertama kali saya buat.
 
 8. Setelah selesai melakukan migrasi, saya langsung mencoba menjalankan server kembali untuk melihat apakah sudah sesuai atau belum. Ketika saya login dengan akun yang memiliki id `1` (akun dengan nama `Maxwell`), saya melihat data yang ditampilkan sesuai. Namun, ketika saya login dengan akun `user2`, saya melihat bahwa data yang seharusnya menjadi milik `Maxwell` sekarang masih ditampilkan. Saya membuang waktu yang relatif banyak disini dengan melakukan `git restore`, menghapus `db.sqlite3`, dan melakukan migrasi ulang dari tugas sebelumnya hingga tugas ini karena saya pikir saya melewati sebuah step. Ternyata, setelah membaca `views.py` lagi, saya lupa untuk mengubah objek `Item` yang diambil menjadi objek `Item` yang dimiliki oleh `user` yang sedang mengakses halamannya. Saya ubah itu, dan setelah dicoba kembali, hasilnya seperti ekspektasi.
+
+---
+
+## Tugas 5
+
+> Jelaskan manfaat dari setiap *element selector* dan kapan waktu yang tepat untuk menggunakannya.
+
+- *Element Selector*
+Manfaat *element selector* adalah memilih semua *element* yang memiliki HTML tag yang sama dan mengubah properti dari semua *element* tersebut. *Selector* ini biasa digunakan ketika kita ingin mengubah properti atau *style* dari sebuah *element* secara menyeluruh di projek kita, tidak hanya satu atau dua.
+
+- *ID Selector*
+Manfaat *id selector* adalah memilih suatu *element* yang memiliki *id* yang sesuai pada HTML tagnya seperti yang kita inginkan, sehingga kita bisa dengan spesifik mengubah properti dari *element* yang memiliki *id* tersebut. *Selector* ini biasa digunakan ketika kita hanya ingin mengubah properti atau *style* dari suatu *element* spesifik, yang juga mungkin terdapat di beberapa *file* HTML lain dengan *id* yang sama.
+
+- *Class Selector*
+Manfaat *class selector* adalah memilih suatu kelompok *element* yang berada dalam satu *class* yang sama dan mengubah properti atau *style* dari sekelompok *element* itu. *Selector* ini biasa digunakan ketika ada beberapa *element* yang dapat dikelompokkan dalam suatu *class*, sehingga kita dapat mengubah properti atau *style* dari sekelompok *element* tersebut secara bersamaan. *Class selector* juga akan mengubah properti dari *child element* yang terdapat di dalam *parent element* yang memiliki *class* tersebut.
+
+---
+> Jelaskan HTML5 Tag yang kamu ketahui.
+
+- *section*
+Tag `<section>` merupakan sebuah *semantic* tag yang berfungsi untuk memberi tahu pengguna atau *search engine* bahwa *element-element* yang berada di dalam tag tersebut merepresentasikan sebuah *section* atau bagian tertentu. Misalnya *section* pendahuluan, isi, penutup.
+
+- *footer*
+Tag `<footer>` merupakan sebuah *semantic* tag yang menandakan bagian "kaki" dari sebuah halaman web. *Footer* biasa berisi dengan hal seperti *copyright*, *contact information*, *link* untuk kembali ke bagian atas halaman, dan lainnya.
+
+- *header*
+Tag `<header>` merupakan sebuah *semantic* tag yang menandakan bagian "kepala" dari sebuah halaman web. *Header* biasa diisi dengan logo atau *icon* dari halaman web tersebut.
+
+- *nav*
+Tag `<nav>` merupakan sebuah *semantic* tag yang menandakan bagian navigasi dalam sebuah halaman web. Bagian navigasi tersebut biasa terletak pada bagian paling atas halaman web dan berisi *link-link* yang menuju halaman lain di aplikasi web tersebut.
+
+---
+> Jelaskan perbedaan antara *margin* dan *padding*.
+
+Perbedaan antara *margin* dan *padding* adalah *margin* merupakan area kosong dan transparan yang terletak di sekitar sebuah *element* sehingga terdapat jarak antara *element* yang satu dengan *element* yang lain. Sedangkan, *padding* adalah area kosong yang terletak di antara sebuah *element* dengan konten *element* tersebut dan akan mengikuti warna *background* dari konten tersebut. Konten disini dapat berupa teks, gambar, ataupun hal lain yang dapat diletakkan dalam sebuah *element*.
+
+---
+> Jelaskan perbedaan antara *framework* CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
+
+Perbedaan *framework* CSS Tailwind dan Bootstrap:
+- Tailwind memiliki tingkat pembelajaran
+
+---
+> Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+
+1. lorem ipsum
 
 ---
