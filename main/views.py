@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 from django.core import serializers
 from django.shortcuts import render, redirect
@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum
+from django.views.decorators.csrf import csrf_exempt
 
 from main.forms import ItemForm, RegisterForm
 from main.models import Item
@@ -47,6 +48,23 @@ def add_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     return render(request, "add_item.html", context)
 
 
+@csrf_exempt
+def add_item_ajax(request: HttpRequest) -> HttpResponse | HttpResponseNotFound:
+    if request.method == "POST":
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        category = request.POST.get("category")
+        user = request.user
+
+        new_item = Item(name=name, amount=amount, description=description, category=category, user=user)
+        new_item.save()
+
+        return HttpResponse(b"Successfully added item!", status=201)
+    
+    return HttpResponseNotFound()
+
+
 def delete_item(request: HttpRequest, id: int) -> HttpResponseRedirect:
     item = Item.objects.get(pk=id)
     item.delete()
@@ -82,6 +100,11 @@ def show_json(request: HttpRequest) -> HttpResponse:
 def show_json_by_id(request: HttpRequest, id: int) -> HttpResponse:
     data = Item.objects.filter(pk=id)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+
+def get_item_json(request: HttpRequest) -> HttpResponse:
+    items = Item.objects.filter(user=request.user).order_by("-amount")
+    return HttpResponse(serializers.serialize("json", items))
 
 
 def register_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:

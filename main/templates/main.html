@@ -17,12 +17,54 @@
     <p>Class: PBP {{ class }}</p>
     <hr>
 </div>
+
+<div id="addModal" class="modal fade" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 id="addModalLabel" class="modal-title fs-5">Add New Item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="form" class="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Item name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount" placeholder="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="col-form-label">Category:</label>
+                        <select id="category" name="category">
+                            <option value="CHAR_EXP" selected>Character EXP Material</option>
+                            <option value="LC_EXP">Light Cone EXP Material</option>
+                            <option value="RELIC_EXP">Relic EXP Material</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="add_button" class="btn btn-outline-primary" data-bs-dismiss="modal">Add Item</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="mx-auto mb-1 p-2">
     <h2>Current Inventory</h2>
     <p>You currently have <strong>{{ item_amt }}</strong> items in your inventory, with a total of <strong>{{ total_amt }}</strong> inventory space used</p>
 </div>
-<table class="table table-striped">
-    <thead>
+<table id="item_table" class="table table-striped">
+    <!-- <thead>
         <tr>
             <th class="text-center">Name</th>
             <th class="text-center" colspan="3">Amount</th>
@@ -56,12 +98,12 @@
                 </td>
             </tr>
         {% endfor %}
-    </tbody>
+    </tbody> -->
 </table>
 
 <br>
 
-<div class="mx-auto px-2 pb-3" style="display: inline-block;">
+<div class="mx-auto px-1 pb-3" style="display: inline-block;">
     <a href="{% url 'main:add_item' %}">
         <button class="btn btn-outline-primary" style="display: inline-block;">
             Add New Item
@@ -69,7 +111,17 @@
     </a>
 </div>
 
-<div class="mx-auto pb-3" style="display: inline-block;">
+<div class="mx-auto px-1 pb-3" style="display: inline-block;">
+    <button 
+        type="button" class="btn btn-outline-primary" 
+        data-bs-toggle="modal" data-bs-target="#addModal" 
+        style="display: inline-block;"
+    >
+        Add New Item AJAX
+    </button>
+</div>
+
+<div class="mx-auto px-1 pb-3" style="display: inline-block;">
     <a href="{% url 'main:logout' %}">
         <button class="btn btn-outline-danger" style="display: inline-block;">
             Logout
@@ -79,4 +131,72 @@
 
 <h5 class="px-2">Last login: {{ last_login }}</h5>
 
+<script>
+    async function getItems() {
+        return fetch("{% url 'main:get_item_json' %}")
+            .then((res) => res.json());
+    }
+
+    async function refreshItems() {
+        document.getElementById("item_table").innerHTML = "";
+        const items = await getItems();
+        let htmlString = `
+            <thead>
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center" colspan="3">Amount</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Category</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+        items.forEach((item) => {
+            const pk = item.pk;
+            const subtractUrl = "{% url 'main:add_subtract_item_by_one' id=1 option=0 %}".replace("1", pk);
+            const addUrl = subtractUrl.replace("0", 1);
+            const deleteUrl = "{% url 'main:delete_item' id=0 %}".replace("0", pk);
+            htmlString += `
+                <tr>
+                    <td>${item.fields.name}</td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <a href="${addUrl}">
+                            <button class="btn btn-outline-primary" style="width: 40px; height: 40px;">+</button>
+                        </a>
+                    </td>
+                    <td class="text-center" style="vertical-align: middle;">${item.fields.amount}</td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        <a href="${subtractUrl}">
+                            <button class="btn btn-outline-danger" style="width: 40px; height: 40px;">-</button>
+                        </a>
+                    </td>
+                    <td>${item.fields.description}</td>
+                    <td>${item.fields.category}</td>
+                    <td>
+                        <a href="${deleteUrl}">
+                            <button class="btn btn-outline-danger">Delete</button>
+                        </a>
+                    </td>
+                </tr>
+            `;
+        });
+
+        htmlString += "</tbody>";
+        document.getElementById("item_table").innerHTML = htmlString;
+    }
+
+    refreshItems();
+
+    function addItem() {
+        fetch("{% url 'main:create_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector("#form"))
+        }).then(refreshItems);
+
+        document.getElementById("form").reset();
+        return false;
+    }
+
+    document.getElementById("add_button").onclick = addItem;
+</script>
 {% endblock content %}
