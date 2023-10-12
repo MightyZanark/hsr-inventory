@@ -71,7 +71,7 @@ def delete_item(request: HttpRequest, id: int) -> HttpResponseRedirect:
     return HttpResponseRedirect(reverse("main:show_main"))
 
 
-def delete_item_ajax(request: HttpRequest, id: int) -> HttpResponse | HttpResponseNotFound:
+def delete_item_ajax(request: HttpRequest, id: int) -> HttpResponse:
     item = Item.objects.get(pk=id)
     item.delete()
     return HttpResponse(b"Successfully deleted item!", status=200)

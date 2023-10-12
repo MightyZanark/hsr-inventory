@@ -113,21 +113,6 @@
             .then((res) => res.json());
     }
 
-    async function deleteItem(id) {
-        return fetch("{% url 'main:delete_ajax' id=0 %}".replace("0", id))
-            .then((res) => refreshItems);
-    }
-
-    async function addAmountByOne(id) {
-        return fetch("{% url 'main:add_subtract_item_by_one' id=0 option=1 %}".replace("0", id))
-            .then((res) => refreshItems);
-    }
-
-    async function subtractAmountByOne(id) {
-        return fetch("{% url 'main:add_subtract_item_by_one' id=1 option=0 %}".replace("1", id))
-            .then((res) => refreshItems);
-    }
-
     async function refreshItems() {
         document.getElementById("item_table").innerHTML = "";
         const items = await getItems();
@@ -143,9 +128,9 @@
                     <h5 class="card-title ellipsis">${item.fields.name}</h5>
                     <h6 class="card-subtitle mb-2">Amount: ${item.fields.amount}</h6>
                     <p class="card-text ellipsis" style="height: 4.5rem;">${item.fields.description}</p>
-                    <a href onclick="return addAmountByOne(${pk});" class="btn btn-outline-primary" style="width: 40px; height: 40px;">+</a>
-                    <a href onclick="return subtractAmountByOne(${pk});" class="btn btn-outline-danger" style="width: 40px; height: 40px;">-</a>
-                    <a href onclick="return deleteItem(${pk});" class="btn btn-outline-danger" style="float: right;">Delete</a>
+                    <button onclick="addAmountByOne(${pk});" class="btn btn-outline-primary" style="width: 40px; height: 40px;">+</button>
+                    <button onclick="subtractAmountByOne(${pk});" class="btn btn-outline-danger" style="width: 40px; height: 40px;">-</button>
+                    <button onclick="deleteItem(${pk});" class="btn btn-outline-danger" style="float: right;">Delete</button>
                 </div>
             </div>
             `;
@@ -155,7 +140,7 @@
     }
 
     refreshItems();
-
+        
     function addItem() {
         fetch("{% url 'main:create_ajax' %}", {
             method: "POST",
@@ -163,6 +148,24 @@
         }).then(refreshItems);
 
         document.getElementById("form").reset();
+        return false;
+    }
+
+    function deleteItem(id) {
+        fetch("{% url 'main:delete_ajax' id=0 %}".replace("0", id))
+            .then(refreshItems);
+        return false;
+    }
+
+    function addAmountByOne(id) {
+        fetch("{% url 'main:add_subtract_item_by_one' id=0 option=1 %}".replace("0", id))
+            .then(refreshItems);
+        return false;
+    }
+
+    function subtractAmountByOne(id) {
+        fetch("{% url 'main:add_subtract_item_by_one' id=1 option=0 %}".replace("1", id))
+            .then(refreshItems);
         return false;
     }
 
