@@ -52,7 +52,7 @@ def add_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
 def add_item_ajax(request: HttpRequest) -> HttpResponse | HttpResponseNotFound:
     if request.method == "POST":
         name = request.POST.get("name")
-        amount = request.POST.get("amount")
+        amount = int(request.POST.get("amount"))
         description = request.POST.get("description")
         category = request.POST.get("category")
         user = request.user
@@ -71,15 +71,29 @@ def delete_item(request: HttpRequest, id: int) -> HttpResponseRedirect:
     return HttpResponseRedirect(reverse("main:show_main"))
 
 
+def delete_item_ajax(request: HttpRequest, id: int) -> HttpResponse | HttpResponseNotFound:
+    item = Item.objects.get(pk=id)
+    item.delete()
+    return HttpResponse(b"Successfully deleted item!", status=200)
+
+
 def add_subtract_item_by_one(request: HttpRequest, id: int, option: int) -> HttpResponseRedirect:
     item = Item.objects.get(pk=id)
+    resp_str = b"Successfully "
     if option == 1:
         item.amount += 1
+        resp_str += b"added "
     elif option == 0:
         if item.amount > 0:
             item.amount -= 1
+            resp_str += b"subtracted "
+        resp_str = b"Item is already at lowest amount"
+    
+    if b"Success" in resp_str:
+        resp_str += b"item's amount by 1"
+
     item.save()
-    return HttpResponseRedirect(reverse("main:show_main"))
+    return HttpResponse(resp_str, status=200)
 
 
 def show_xml(request: HttpRequest) -> HttpResponse:

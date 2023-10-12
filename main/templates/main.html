@@ -3,9 +3,20 @@
 {% block meta %}
 <title>Game Inventory App</title>
 <style>
-    tr:last-child > td {
+    #item_table > div.card:last-child {
         background-color: #000;
         color: goldenrod;
+    }
+    
+    div.card > h6 {
+        color: #6c757d;
+    }
+
+    .ellipsis {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 </style>
 {% endblock meta %}
@@ -63,43 +74,8 @@
     <h2>Current Inventory</h2>
     <p>You currently have <strong>{{ item_amt }}</strong> items in your inventory, with a total of <strong>{{ total_amt }}</strong> inventory space used</p>
 </div>
-<table id="item_table" class="table table-striped">
-    <!-- <thead>
-        <tr>
-            <th class="text-center">Name</th>
-            <th class="text-center" colspan="3">Amount</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">Category</th>
-            <th></th>
-        </tr>
-    </thead>
 
-    <tbody>
-        {% for item in inventory %}
-            <tr>
-                <td>{{ item.name }}</td>
-                <td>
-                    <a href="{% url 'main:add_subtract_item_by_one' id=item.pk option=1 %}">
-                        <button class="h-25 btn btn-outline-primary">+</button>
-                    </a>
-                </td>
-                <td>{{ item.amount }}</td>
-                <td>
-                    <a href="{% url 'main:add_subtract_item_by_one' id=item.pk option=0 %}">
-                        <button class="btn btn-outline-danger">-</button>
-                    </a>
-                </td>
-                <td>{{ item.description }}</td>
-                <td>{{ item.category }}</td>
-                <td>
-                    <a href="{% url 'main:delete_item' id=item.pk %}">
-                        <button class="btn btn-outline-danger">Delete</button>
-                    </a>
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody> -->
-</table>
+<div id="item_table"></div>
 
 <br>
 
@@ -137,51 +113,44 @@
             .then((res) => res.json());
     }
 
+    async function deleteItem(id) {
+        return fetch("{% url 'main:delete_ajax' id=0 %}".replace("0", id))
+            .then((res) => refreshItems);
+    }
+
+    async function addAmountByOne(id) {
+        return fetch("{% url 'main:add_subtract_item_by_one' id=0 option=1 %}".replace("0", id))
+            .then((res) => refreshItems);
+    }
+
+    async function subtractAmountByOne(id) {
+        return fetch("{% url 'main:add_subtract_item_by_one' id=1 option=0 %}".replace("1", id))
+            .then((res) => refreshItems);
+    }
+
     async function refreshItems() {
         document.getElementById("item_table").innerHTML = "";
         const items = await getItems();
-        let htmlString = `
-            <thead>
-                <tr>
-                    <th class="text-center">Name</th>
-                    <th class="text-center" colspan="3">Amount</th>
-                    <th class="text-center">Description</th>
-                    <th class="text-center">Category</th>
-                </tr>
-            </thead>
-            <tbody>
-        `;
+        let htmlString = ``;
         items.forEach((item) => {
             const pk = item.pk;
             const subtractUrl = "{% url 'main:add_subtract_item_by_one' id=1 option=0 %}".replace("1", pk);
             const addUrl = subtractUrl.replace("0", 1);
             const deleteUrl = "{% url 'main:delete_item' id=0 %}".replace("0", pk);
             htmlString += `
-                <tr>
-                    <td>${item.fields.name}</td>
-                    <td style="text-align: center; vertical-align: middle;">
-                        <a href="${addUrl}">
-                            <button class="btn btn-outline-primary" style="width: 40px; height: 40px;">+</button>
-                        </a>
-                    </td>
-                    <td class="text-center" style="vertical-align: middle;">${item.fields.amount}</td>
-                    <td style="text-align: center; vertical-align: middle;">
-                        <a href="${subtractUrl}">
-                            <button class="btn btn-outline-danger" style="width: 40px; height: 40px;">-</button>
-                        </a>
-                    </td>
-                    <td>${item.fields.description}</td>
-                    <td>${item.fields.category}</td>
-                    <td>
-                        <a href="${deleteUrl}">
-                            <button class="btn btn-outline-danger">Delete</button>
-                        </a>
-                    </td>
-                </tr>
+            <div class="card my-2 mx-1" style="width: 18rem; display: inline-block;">
+                <div class="card-body">
+                    <h5 class="card-title ellipsis">${item.fields.name}</h5>
+                    <h6 class="card-subtitle mb-2">Amount: ${item.fields.amount}</h6>
+                    <p class="card-text ellipsis" style="height: 4.5rem;">${item.fields.description}</p>
+                    <a href onclick="return addAmountByOne(${pk});" class="btn btn-outline-primary" style="width: 40px; height: 40px;">+</a>
+                    <a href onclick="return subtractAmountByOne(${pk});" class="btn btn-outline-danger" style="width: 40px; height: 40px;">-</a>
+                    <a href onclick="return deleteItem(${pk});" class="btn btn-outline-danger" style="float: right;">Delete</a>
+                </div>
+            </div>
             `;
         });
 
-        htmlString += "</tbody>";
         document.getElementById("item_table").innerHTML = htmlString;
     }
 
