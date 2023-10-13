@@ -3,6 +3,7 @@
 - [Tugas 3](#tugas-3)
 - [Tugas 4](#tugas-4)
 - [Tugas 5](#tugas-5)
+- [Tugas 6](#tugas-6)
 
 
 ## Tugas 2
@@ -267,3 +268,39 @@ Menurut saya, kita sebaiknya menggunakan Bootstrap ketika kita tidak terlalu mem
 5. Halaman terkahir yang saya ubah adalah halaman `add-item`. Kurang lebih yang saya lakukan pada halaman tersebut sama seperti yang saya lakukan terhadap halaman `register`, hanya sekedar merapikan tabel input dan menambahkan warna pada tombol `Add Item`.
 
 ---
+
+## Tugas 6
+
+> Jelaskan perbedaan antara *asynchronous programming* dengan *synchronous programming*.
+
+Perbedaan *asynchronous programming* dengan *synchronous programming* adalah pada *synchronous programming*, semua operasi yang dilakukan akan dijalankan satu per satu, operasi kedua harus menunggu operasi pertama selesai, operasi ketiga harus menunggu operasi kedua selesai, dan seterusnya hingga operasi terakir. Di lain sisi, pada *asynchronous programming*, operasi-operasi yang dilakukan dapat dijalankan secara bersamaan jika operasi-operasi tersebut tidak memiliki hubungan, sehingga kecepatan pelaksanaan operasi-operasi lebih cepat, misal kita harus mengirim suatu *request* ke server dan sambil menunggu *response* dari server, kita bisa saja melakukan hal lain yang tidak memerlukan data dari *response* tersebut, seperti memunculkan *alert box* ketika suatu tombol ditekan.
+
+---
+> Dalam penerapan JavaScript dan AJAX, terdapat penerapan paradigma *event-driven programming*. Jelaskan maksud dari paradigma tersebut dan sebutkan salah satu contoh penerapannya pada tugas ini.
+
+Paradigma *event-driven programming* adalah paradigma dimana *flow* dari sebuah program bergantung pada *event* yang terjadi seperti ketika ada tombol yang ditekan, menekan tombol pada *keyboard*, menggerakkan *mouse*, dan lainnya. Contoh penerapannya pada tugas ini adalah ketika tombol `Delete` ditekan, itu menandakan sebuah *event* terjadi dan *event* tersebut akan di proses oleh *event handler*. Dalam kasus ini *event handler* berupa sebuah *function* JavaScript yang bertujuan mengirimkan *request* ke server Django untuk menghapus suatu `Item` dari *database* dan menghilangkannya dari *list items*. Setelah *event* tersebut sudah selesai di *handle*, program akan kembali menunggu hingga *event* berikutnya datang untuk dikirimkan ke *event handler* yang sesuai.
+
+---
+> Jelaskan penerapan *asynchronous programming* pada AJAX.
+
+Penerapan *asynchronous programming* pada AJAX dilakukan dengan menggunakan *function* `async` dan `await` yang dikombinasikan dengan `fetch()`. *Function* `async` berguna untuk menandakan sebuah *function* bersifat asinkronus sehingga dapat dijalankan secara parallel dengan *function* lain yang tidak berhubungan. *Function* `await` berguna untuk menunggu jalannya sebuah *function* yang ditandai dengan `async` agar nilai yang dikembalikan *function* tersebut dapat digunakan. *Function* `fetch()` berguna untuk mengirim *request* ke suatu URL secara asinkronus dan kemudian mengembalikan *response* dari URL yang dilanjutkan dengan operasi lain yang membutuhkan data dari *response*. `fetch()` dapat menggunakan *method* HTTP spesifik, seperti `POST`, dan juga dapat di-*set* parameter untuk `headers` dan `body` guna menyesuaikan permintaan cara mengirimkan *request* ke URL yang kita inginkan. 
+
+---
+> Pada PBP kali ini, penerapan AJAX dilakukan dengan menggunakan Fetch API daripada *library* jQuery. Bandingkanlah kedua teknologi tersebut dan tuliskan pendapat kamu teknologi manakah yang lebih baik untuk digunakan.
+
+Menurut saya, kedua teknologi tersebut memiliki kegunaannya masing-masing. Fetch API merupakan API yang sudah ada langsung di JavaScript sehingga tidak harus meng-*import* *library* lain yang membuat ukuran halaman web yang kita buat lebih kecil. Oleh karena itu, menurut saya Fetch API baik untuk digunakan ketika aplikasi yang kita buat memiliki keterbatasan ukuran atau tidak menggunakan banyak AJAX. Di lain sisi, jQuery merupakan *library* eksternal yang harus di *import* melalui `<script>` tag. Namun, karena merupakan suatu *library*, jQuery menghadirkan juga berbagai fungsionalitas lain selain seperti manipulasi DOM, *event-handling*, dan animasi CSS. Tentu hal-hal tersebut bisa-bisa saja dilakukan di JavaScript biasa, tetapi dengan jQuery, sintaks untuk melakukan hal-hal tersebut dapat dibilang jauh lebih elegan dan simpel. Oleh karena itu, menurut saya jQuery baik untuk digunakan ketika kita akan melakukan banyak sekali AJAX dan manipulasi DOM.
+
+---
+> Jelaskan bagaimana cara kamu mengimplementasikan *checklist* di atas secara *step-by-step* (bukan hanya sekadar mengikuti tutorial).
+
+1. Hal pertama yang saya lakukan adalah menambahkan *function* `add_item_ajax` untuk dapat membuat `Item` melalui AJAX. Setelah itu saya tambahkan lokasinya di `urls.py` dan mulai menambahkan JavaScript di `main.html`.
+
+2. JavaScript yang saya tambahkan awalnya hanya merupakan hasil *copy paste* dari tutorial yang kemudian saya modifikasi untuk menyesuaikan keperluan di tugas.
+
+3. Setelah itu, saya menambahkan tombol `Add New Item AJAX` dan modal untuk membuat `Item` baru yang kurang lebih sama dengan apa yang ada di tutorial, hanya saja saya modifikasi sedikit untuk menyesuaikan dengan keperluan *fields* dari objek `Item`.
+
+4. Awalnya saya masih menggunakan `table`, namun pengumuman di Discord mengatakan untuk menyesuaikan AJAX dengan `cards` yang sudah diimplementasikan sebelumnya sehingga saya harus mengubah `table` menjadi bentuk `cards`. Hal tersebut ternyata tidak terlalu sulit karena di dokumentasi Bootstrap sudah ada contoh yang jelas.
+
+5. Setelah itu semua selesai, saya baru mencoba mengubah tombol-tombol lain agar mendukung AJAX juga seperti tombol untuk menambahkan/mengurangi `amount` dari suatu `Item` sebanyak satu dan tombol untuk menghapus `Item` tersebut. Hal tersebut juga ternyata tidak terlalu sulit karena konsepnya sama dengan *function* `addItem` yang ada di tutorial. 
+
+6. Setelah semua hal *coding* selesai, saya menjalankan perintah `collectstatic` seperti yang diperintahkan namun ternyata ada masalah karena saya belum menambahkan `STATIC_ROOT` di `settings.py`. Saya lakukan itu sambil melihat kembali tutorial tentang *deployment* untuk memastikan apa yang saya lakukan sudah benar.
