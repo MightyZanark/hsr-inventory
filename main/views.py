@@ -38,7 +38,6 @@ def add_item(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     form = ItemForm(request.POST or None)
 
     if form.is_valid() and request.method == "POST":
-        # form.save()
         item: Item = form.save(commit=False)
         item.user = request.user
         item.save()
@@ -77,7 +76,7 @@ def delete_item_ajax(request: HttpRequest, id: int) -> HttpResponse:
     return HttpResponse(b"Successfully deleted item!", status=200)
 
 
-def add_subtract_item_by_one(request: HttpRequest, id: int, option: int) -> HttpResponseRedirect:
+def add_subtract_item_by_one(request: HttpRequest, id: int, option: int) -> HttpResponse:
     item = Item.objects.get(pk=id)
     resp_str = b"Successfully "
     if option == 1:
@@ -87,7 +86,8 @@ def add_subtract_item_by_one(request: HttpRequest, id: int, option: int) -> Http
         if item.amount > 0:
             item.amount -= 1
             resp_str += b"subtracted "
-        resp_str = b"Item is already at lowest amount"
+        else:
+            resp_str = b"Item is already at lowest amount"
     
     if b"Success" in resp_str:
         resp_str += b"item's amount by 1"
@@ -155,8 +155,7 @@ def login_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
                 "Incorrect username or password. Please try again."
             )
     
-    context = {}
-    return render(request, "login.html", context)
+    return render(request, "login.html", {})
 
 
 def logout_user(request: HttpRequest) -> HttpResponseRedirect:
