@@ -152,6 +152,7 @@ def get_item_flutter(request: HttpRequest) -> JsonResponse:
     }, status=200)
 
 
+@csrf_exempt
 def register_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     form = UserCreationForm()
 
@@ -169,6 +170,7 @@ def register_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     return render(request, "register.html", context)
 
 
+@csrf_exempt
 def login_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     if request.method == "POST":
         username = request.POST.get("username")
@@ -189,6 +191,7 @@ def login_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
     return render(request, "login.html", {})
 
 
+@csrf_exempt
 def logout_user(request: HttpRequest) -> HttpResponseRedirect:
     logout(request)
     resp = HttpResponseRedirect(reverse("main:login"))
