@@ -1,6 +1,9 @@
+import json
 from datetime import datetime
 
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.http import HttpRequest, HttpResponse, \
+                        HttpResponseRedirect, HttpResponseNotFound, \
+                        JsonResponse
 from django.urls import reverse
 from django.core import serializers
 from django.shortcuts import render, redirect
@@ -64,6 +67,24 @@ def add_item_ajax(request: HttpRequest) -> HttpResponse | HttpResponseNotFound:
     return HttpResponseNotFound()
 
 
+@csrf_exempt
+def add_item_flutter(request: HttpRequest) -> JsonResponse:
+    if request.method == "POST":
+        data = json.loads(request.body)
+        
+        new_item = Item(
+            name=data["name"],
+            amount=int(data["amount"]),
+            description=data["description"],
+            user=request.user
+        )
+        new_item.save()
+        return JsonResponse({"status": True}, status=200)
+        
+    else:
+        return JsonResponse({"status": False}, status=401)
+
+
 def delete_item(request: HttpRequest, id: int) -> HttpResponseRedirect:
     item = Item.objects.get(pk=id)
     item.delete()
@@ -119,6 +140,16 @@ def show_json_by_id(request: HttpRequest, id: int) -> HttpResponse:
 def get_item_json(request: HttpRequest) -> HttpResponse:
     items = Item.objects.filter(user=request.user).order_by("-amount")
     return HttpResponse(serializers.serialize("json", items))
+
+
+@csrf_exempt
+def get_item_flutter(request: HttpRequest) -> JsonResponse:
+    items = Item.objects.filter(user=request.user).order_by("-amount")
+    items = serializers.serialize("json", items)
+    return JsonResponse({
+        "data": items,
+        "status": True
+    }, status=200)
 
 
 def register_user(request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
