@@ -4,7 +4,6 @@ WORKDIR /app
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app \
-    DJANGO_SETTINGS_MODULE=game_inventory.settings \
     PORT=8000 \
     WEB_CONCURRENCY=2
 
@@ -20,6 +19,9 @@ COPY ./requirements.txt /requirements.txt
 COPY ./custom-wheels /wheels
 RUN pip install --no-index --find-links=/wheels -r /requirements.txt
 
+# Remove wheels
+RUN rm -rf /wheels
+
 # Copy project code
 COPY . .
 
@@ -34,6 +36,7 @@ if [ -z "$PROJECT_NAME" ]; then\n\
     exit 1\n\
 fi\n\
 echo "Django project name: ${PROJECT_NAME}"\n\
+export DJANGO_SETTINGS_MODULE=${PROJECT_NAME}.settings\n\
 python manage.py migrate\n\
 python manage.py collectstatic --noinput\n\
 gunicorn ${PROJECT_NAME}.wsgi:application' > /app/run.sh && \
