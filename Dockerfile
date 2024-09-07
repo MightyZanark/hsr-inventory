@@ -17,16 +17,27 @@ RUN addgroup --system django \
 
 # Requirements are installed here to ensure they will be cached.
 COPY ./requirements.txt /requirements.txt
-RUN pip install -r /requirements.txt
+COPY ./custom-wheels /wheels
+RUN pip install --no-index --find-links=/wheels -r /requirements.txt
 
 # Copy project code
 COPY . .
-
-RUN python manage.py collectstatic --noinput --clear
 
 # Run as non-root user
 RUN chown -R django:django /app
 USER django
 
+RUN echo '#!/bin/bash\n\
+PROJECT_NAME=$(find . -maxdepth 2 -type f -name "wsgi.py" | cut -d "/" -f 2)\n\
+if [ -z "$PROJECT_NAME" ]; then\n\
+    echo "Error: Could not find Django project."\n\
+    exit 1\n\
+fi\n\
+echo "Django project name: ${PROJECT_NAME}"\n\
+python manage.py migrate\n\
+python manage.py collectstatic --noinput\n\
+gunicorn ${PROJECT_NAME}.wsgi:application' > /app/run.sh && \
+    chmod +x /app/run.sh
+
 # Run application
-CMD gunicorn game_inventory.wsgi:application
+CMD ["/app/run.sh"]
