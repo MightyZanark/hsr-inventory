@@ -42,18 +42,6 @@ jobs:
       env:
         PWS_URL: ${{ secrets.PWS_URL }}
       run: |
-          # Set up credential helper
-          #git config --global credential.helper store
-          #echo "https://${{ secrets.PWS_USERNAME }}:${{ secrets.PWS_PASSWORD }}@pbp.cs.ui.ac.id" > ~/.git-credentials
-          #PWS_URL="${{ secrets.PWS_URL }}"
-          #if git remote | grep -q "^pws$"; then
-          #  echo "PWS remote exists. Updating URL."
-          #  git remote set-url pws "$PWS_URL"
-          #else
-          #  echo "PWS remote does not exist. Adding it."
-          #  git remote add pws "$PWS_URL"
-          #fi
-          
           git add .
           git commit -m "Add installed dependencies and custom wheels" || echo "No changes to commit"
           
